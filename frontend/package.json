@@ -1,41 +1,33 @@
 {
-    "title": "Small Business",
-    "name": "startbootstrap-small-business",
-    "version": "4.2.1",
-    "scripts": {
-        "start": "node_modules/.bin/gulp watch"
-    },
-    "description": "A small business HTML template built with Bootstrap",
-    "keywords": [
-        "css",
-        "sass",
-        "html",
-        "responsive",
-        "theme",
-        "template"
-    ],
-    "homepage": "https://startbootstrap.com/template-overviews/small-business",
+    "title": "PiCam",
+    "name": "Picam",
+    "version": "0.1.0",
+    "description": "PiCam",
+    "homepage": "",
     "bugs": {
-        "url": "https://github.com/BlackrockDigital/startbootstrap-small-business/issues",
-        "email": "feedback@startbootstrap.com"
+        "url": "",
+        "email": "feedbackXXX"
     },
     "license": "MIT",
-    "author": "Start Bootstrap",
+    "author": "Sudeepto Roy",
     "contributors": [
-        "David Miller (http://davidmiller.io/)"
+        "Sudeepto Roy"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/BlackrockDigital/startbootstrap-small-business.git"
+        "url": "https://github.com/sudeeptoroy/picam.git"
     },
     "dependencies": {
         "bootstrap": "4.3.1",
-        "jquery": "3.4.1"
-    },
-    "devDependencies": {
-        "browser-sync": "2.26.7",
-        "del": "^4.1.1",
-        "gulp": "4.0.2",
-        "merge-stream": "2.0.0"
+        "jquery": "3.4.1",
+        "bcrypt": "^3.0.7",
+        "body-parser": "^1.19.0",
+        "cookie-parser": "^1.4.4",
+        "express": "^4.17.1",
+        "express-session": "^1.17.0",
+        "morgan": "^1.9.1",
+        "pg": "^7.16.1",
+        "sequelize": "^5.21.3",
+        "sqlite3": "^4.1.1"
     }
 }
