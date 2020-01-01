@@ -2,4 +2,4 @@ sqlite3 user_database.sqlite
 
 docker build -t sudeepto/picam_frontend:v1 .
 
-docker run -it --rm --name picam-frontend -v "$PWD":/usr/src/app -w /usr/src/app -p 9000:9000 sudeepto/picam_frontend:v1 node server.js
+docker run -it --rm --name picam-frontend -v "$PWD":/usr/src/app -w /usr/src/app -p 9000:9000 sudeepto/picam_frontend:v1 node app.js
