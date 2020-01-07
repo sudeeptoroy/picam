@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+//var multer  =   require('multer');
+//var path = require('path')
+var fs = require('fs')
 
 // middleware function to check for logged-in users
 var sessionChecker = (req, res, next) => {
@@ -77,4 +80,85 @@ router.get('/', sessionChecker, (req, res) => {
     res.redirect('/login');
 });
 
+router.post('/api/captures', function (req, res) {
+  //var base64Data = req.body.imgBase64.replace(/^data:image\/png;base64,/, "");
+  var base64Data = req.body.imgBase64;
+  var path = "." + "/uploads/captures/" + req.body.fileName;
+  fs.writeFile(path, base64Data, "base64", function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send("success");
+    }
+  });
+});
+
+/*
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    //callback(null, file.fieldname + '-' + Date.now());
+    callback(null, 'sudi' + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+
+router.post('/api/photo',function(req,res){
+    console.log('sudi');
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        res.end("File is uploaded");
+    });
+    console.log('sudi-ends');
+});
+
+const handleError = (err, res) => {
+	  res
+	    .status(500)
+	    .contentType("text/plain")
+	    .end("Oops! Something went wrong!");
+};
+
+
+const upload = multer({
+  dest: "/home/pi/projects/sudeepto/picam/frontend/uploads/files"
+  // you might also want to set some limits: https://github.com/expressjs/multer#limits
+});
+
+router.post(
+  "/api/photo",
+  upload.single("file"),
+  (req, res) => {
+    const tempPath = req.file.path;
+    //const targetPath = path.join(__dirname, "../uploads/", Date.now() + '-' + req.file.originalname);
+    const targetPath = path.join(__dirname, "../uploads/", Date.now() + '.png');
+    console.log ("upload loc", targetPath, " temp path = ", tempPath);
+    //console.log (" req = ", req);
+
+    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+      fs.rename(tempPath, targetPath, err => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(200)
+          .contentType("text/plain")
+          .end("File uploaded!");
+      });
+    } else {
+      fs.unlink(tempPath, err => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(403)
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
+      });
+    }
+  }
+);
+*/
 module.exports = router;

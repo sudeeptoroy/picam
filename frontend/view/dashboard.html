@@ -23,7 +23,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Hello Sudeepto</a>
+      <a class="navbar-brand" href="#">Hello</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -57,23 +57,24 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="http://placehold.it/900x400" alt="">
+        <video playsinline autoplay></video>
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
+      <!--div class="col-sm"-->
         <h1 class="font-weight-light">Powered by Picam</h1>
         <p>This application will help you connect with your peers and perform smart actions around it!</p>
-        <a class="btn btn-primary" href="#">Start my Cam!</a>
+	<div>
+          <button class="btn btn-primary" id="snapShotSend">Snap and Send!</button>
+        </div>
       </div>
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
     <!-- Call to Action Well -->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-      <div class="card-body">
-        <p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p>
-      </div>
+    <div class="row bg-secondary my-5 py-4">
+      <canvas></canvas>
     </div>
 
     <!-- Content Row -->
@@ -132,6 +133,8 @@
   <!-- Bootstrap core JavaScript -->
   <script src="jquery/jquery.min.js"></script>
   <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="camera/main.js" async></script>
 
 </body>
 

@@ -29,7 +29,9 @@ https.createServer( options, app).listen(app.get('port'), function () {
 app.use(morgan('dev'));
 
 // initialize body-parser to parse incoming parameters requests to req.body
-app.use(bodyParser.urlencoded({ extended: true }));
+// Tell the bodyparser middleware to accept more data
+ app.use(bodyParser.json({limit: '1mb'}));
+ app.use(bodyParser.urlencoded({limit: '1mb', extended: true}));
 
 // initialize cookie-parser to allow us access the cookies stored in the browser. 
 app.use(cookieParser());
