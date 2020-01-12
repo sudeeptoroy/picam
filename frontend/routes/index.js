@@ -9,6 +9,8 @@ var NATS = require('nats');
 const servers = ['nats://192.168.0.145:4222']
 const nc = NATS.connect({ servers: servers, json: true })
 
+var lastResult ='';
+
 nc.on('error', (e) => {
   console.log('Error [' + nc.currentServer + ']: ' + e)
   process.exit()
@@ -23,6 +25,7 @@ nc.on('connect', () => {
   let subject = "num_plate";
   nc.subscribe(subject, opts, (msg) => {
     console.log('Received "' + JSON.stringify(msg) + '"')
+    lastResult = msg['plate']
   })
   if (queue) {
     console.log('Queue [' + queue + '] listening on [' + subject + ']')
@@ -118,6 +121,16 @@ router.post('/api/captures', function (req, res) {
   })
   res.send("success");
 });
+
+router.get('/lastResult', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.send(lastResult);
+	lastResult = '';
+    } else {
+        res.redirect('/login');
+    }
+});
+
 /*
 
 router.post('/api/captures', function (req, res) {

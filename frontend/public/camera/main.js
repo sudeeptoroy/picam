@@ -4,6 +4,7 @@
 const video = document.querySelector('video');
 const canvas = window.canvas = document.querySelector('canvas');
 const snapShotSend = document.getElementById('snapShotSend');
+const captureOutput = document.getElementById('captureOutput');
 
 snapShotSend.onclick = function() {
 	var fileType = "image/png";
@@ -28,9 +29,14 @@ snapShotSend.onclick = function() {
 	canvas.height = newHeight;
 
 	canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+	snapShotSend.disabled = true;
 	var dataURL = canvas.toDataURL(fileType);
 	dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "")
 	sendFile(dataURL,fileType);
+	sleep(5000).then(() => {
+		snapShotSend.disabled = false;
+
+	});
 };
 
 function sendFile(dataURL,fileType) {
@@ -54,8 +60,41 @@ function sendFile(dataURL,fileType) {
 		console.log('saved'); 
 
 	});
+	updateDisplay();
 };
 
+function sleep(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+var gcount = 0;
+
+function updateDisplay() {
+	var url = "/lastResult";
+	captureOutput.textContent = "checking...";
+	snapShotSend.disabled = true;
+	gcount += 1;
+	if (gcount % 4 == 0) {
+		captureOutput.textContent = "oops";
+		gcount = 0;
+		snapShotSend.disabled = false;
+		return;
+	}
+	fetch(url).then(function(response) {
+		response.text().then(function(text) {
+			if (text == null || text == '') {
+				console.log("trying in 1 sec");
+				sleep(1000).then(() => {
+					updateDisplay();
+				});
+			} else {
+				captureOutput.textContent = 'result:' + text;
+				snapShotSend.disabled = false;
+				gcount = 0;
+			}
+		});
+	});
+};
 
 /*
 snapShotSend.onclick = function() {
