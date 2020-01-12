@@ -3,7 +3,33 @@ var router = express.Router();
 var User = require('../models/user');
 //var multer  =   require('multer');
 //var path = require('path')
-var fs = require('fs')
+var fs = require('fs');
+var NATS = require('nats');
+
+const servers = ['nats://192.168.0.145:4222']
+const nc = NATS.connect({ servers: servers, json: true })
+
+nc.on('error', (e) => {
+  console.log('Error [' + nc.currentServer + ']: ' + e)
+  process.exit()
+})
+
+nc.on('connect', () => {
+  const opts = {}
+  const queue = ''
+  if (queue) {
+    opts.queue = queue
+  }
+  let subject = "num_plate";
+  nc.subscribe(subject, opts, (msg) => {
+    console.log('Received "' + JSON.stringify(msg) + '"')
+  })
+  if (queue) {
+    console.log('Queue [' + queue + '] listening on [' + subject + ']')
+  } else {
+    console.log('Listening on [' + subject + ']')
+  }
+})
 
 // middleware function to check for logged-in users
 var sessionChecker = (req, res, next) => {
@@ -81,6 +107,20 @@ router.get('/', sessionChecker, (req, res) => {
 });
 
 router.post('/api/captures', function (req, res) {
+  var base64Data = req.body.imgBase64;
+  const subject = 'captures';
+  var msg = {
+    "file": base64Data,
+    "jobno": "1"
+  };
+  nc.publish(subject, msg, () => {
+    //console.log('Published [' + subject + '] : "' + JSON.stringify(msg) + '"')
+  })
+  res.send("success");
+});
+/*
+
+router.post('/api/captures', function (req, res) {
   //var base64Data = req.body.imgBase64.replace(/^data:image\/png;base64,/, "");
   var base64Data = req.body.imgBase64;
   var path = "." + "/uploads/captures/" + req.body.fileName;
@@ -93,6 +133,7 @@ router.post('/api/captures', function (req, res) {
   });
 });
 
+*/
 /*
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {

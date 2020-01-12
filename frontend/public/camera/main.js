@@ -7,8 +7,8 @@ const snapShotSend = document.getElementById('snapShotSend');
 
 snapShotSend.onclick = function() {
 	var fileType = "image/png";
-	var maxWidth = 200;
-	var maxHeight = 200;
+	var maxWidth = 800;
+	var maxHeight = 800;
 
 	var width = video.videoWidth;
 	var height = video.videoHeight;
